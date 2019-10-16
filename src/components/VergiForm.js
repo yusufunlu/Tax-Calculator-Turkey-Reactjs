@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
   root: {
@@ -17,17 +18,19 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    fontSize: 16,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+}))(TableCell);
 
 const dilimler = [
   {
@@ -82,7 +85,8 @@ class VergiForm extends Component {
     this.handleChangeGelirGunluk = this.handleChangeGelirGunluk.bind(this);
     this.handleChangeGelirAylik = this.handleChangeGelirAylik.bind(this);
     this.handleChangeGelirYillik = this.handleChangeGelirYillik.bind(this);
-    this.handleChangeGider = this.handleChangeGider.bind(this);
+    this.handleChangeGiderAylik = this.handleChangeGiderAylik.bind(this);
+    this.handleChangeGiderYillik = this.handleChangeGiderYillik.bind(this);
     this.gelirVergisiHesapla = this.gelirVergisiHesapla.bind(this);
   }
 
@@ -150,8 +154,21 @@ class VergiForm extends Component {
       this.setState({gelirKdvliGunluk: this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk});
     });
   }
-  handleChangeGider(event) {
+  handleChangeGiderAylik(event) {
     this.setState({giderKdvsizAylik: parseInt(event.target.value)}, 
+    async () => { //callback
+      await this.setState({giderKdvAylik: this.state.giderKdvsizAylik*0.18});
+      await this.setState({giderKdvliAylik: this.state.giderKdvsizAylik+ this.state.giderKdvAylik});
+
+      await this.setState({giderKdvsizYillik: this.state.giderKdvsizAylik * 12});
+      await this.setState({giderKdvYillik: this.state.giderKdvAylik * 12});
+      await this.setState({giderKdvliYillik: this.state.giderKdvliAylik * 12});
+      await this.setState({yillikNetkar: this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik})
+      this.gelirVergisiHesapla();
+    });
+  }
+  handleChangeGiderYillik(event) {
+    this.setState({giderKdvsizAylik: parseInt(event.target.value) / 12}, 
     async () => { //callback
       await this.setState({giderKdvAylik: this.state.giderKdvsizAylik*0.18});
       await this.setState({giderKdvliAylik: this.state.giderKdvsizAylik+ this.state.giderKdvAylik});
@@ -172,29 +189,60 @@ class VergiForm extends Component {
     const { classes } = this.props;
     return (
       <div>
+
       <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead>
+      <TableHead>
           <TableRow>
-            <TableCell>       
-              KDV'siz gunluk gelir: <input type="number" value={this.state.gelirKdvsizGunluk} onChange={this.handleChangeGelirGunluk} />
-            </TableCell>
-            <TableCell >          
-              KDV'siz aylik gelir:<input type="number" value={this.state.gelirKdvsizAylik} onChange={this.handleChangeGelirAylik}/>
-            </TableCell>
-            <TableCell >          
-              KDV'siz yillik gelir: <input type="number" value={this.state.gelirKdvsizYillik} onChange={this.handleChangeGelirYillik} />
-            </TableCell>
-            <TableCell >          
-              Aylık KDV'siz gider: <input type="number" value={this.state.giderKdvsizAylik} onChange={this.handleChangeGider} />
-            </TableCell>
-            <TableCell >          
-              Yıllık KDV'siz gider: <input type="number" value={this.state.giderKdvsizYillik} onChange={this.handleChangeGider} />
-            </TableCell>
+            <StyledTableCell> --- </StyledTableCell>
+            <StyledTableCell>       
+              Gunluk Gelir
+            </StyledTableCell>
+            <StyledTableCell>          
+              Aylik Gelir
+            </StyledTableCell>
+            <StyledTableCell>          
+              Yillik gelir
+            </StyledTableCell>
+            <StyledTableCell>          
+              Aylık gider
+            </StyledTableCell>
+            <StyledTableCell>          
+              Yıllık gider
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
+            <StyledTableCell>Giriş</StyledTableCell>
+            <TableCell>       
+            <TextField
+              id="standard-name"
+              label="Gunluk Gelir"
+              className={classes.textField}
+              type="number"
+              defaultValue ="0"
+              onChange={this.handleChangeGelirGunluk}
+              margin="normal"
+            />
+            </TableCell>
+            <TableCell >          
+              <input type="number" value={this.state.gelirKdvsizAylik} onChange={this.handleChangeGelirAylik}/>
+            </TableCell>
+            <TableCell >          
+              <input type="number" value={this.state.gelirKdvsizYillik} onChange={this.handleChangeGelirYillik} />
+            </TableCell>
+            <TableCell >          
+              <input type="number" value={this.state.giderKdvsizAylik} onChange={this.handleChangeGiderAylik} />
+            </TableCell>
+            <TableCell >          
+              <input type="number" value={this.state.giderKdvsizYillik} onChange={this.handleChangeGiderYillik} />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+        <TableBody>
+          <TableRow>
+          <StyledTableCell>KDV</StyledTableCell>
             <TableCell>       
               Günlük gelir KDV : {this.state.gelirKdvGunluk} 
             </TableCell>
@@ -212,6 +260,7 @@ class VergiForm extends Component {
             </TableCell>
           </TableRow>
           <TableRow>
+          <StyledTableCell>KDV'li Toplam</StyledTableCell>
             <TableCell>       
               Günlük gelir KDVli : {this.state.gelirKdvliGunluk} 
             </TableCell>
