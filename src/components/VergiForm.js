@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import roundTo from 'round-to'
 
 const useStyles = makeStyles({
   root: {
@@ -103,7 +104,7 @@ class VergiForm extends Component {
       vergi += (dilimler[1].limit - dilimler[0].limit)  * dilimler[1].oran;
     } else {
       vergi += (this.state.yillikNetkar - dilimler[0].limit)  * dilimler[1].oran;
-      this.setState({gelirVergisiYillik:vergi});
+      this.setState({gelirVergisiYillik:Math.round(vergi * 10) / 10});
       return ;
     }
     if(this.state.yillikNetkar > dilimler[2].limit) {
@@ -126,16 +127,16 @@ class VergiForm extends Component {
   handleChangeGelirGunluk(event) {
     this.setState({gelirKdvsizGunluk: parseInt(event.target.value)}, 
     async () => { //callback
-      await this.setState({gelirKdvGunluk: this.state.gelirKdvsizGunluk*0.18});
-      await this.setState({gelirKdvliGunluk: this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk});
+      await this.setState({gelirKdvGunluk: roundTo(this.state.gelirKdvsizGunluk *0.18,2)});
+      await this.setState({gelirKdvliGunluk: roundTo(this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk,2)});
       
       await this.setState({gelirKdvsizAylik: this.state.gelirKdvsizGunluk * this.state.aylikCalismaGunSayisi});
-      await this.setState({gelirKdvAylik: this.state.gelirKdvsizAylik*0.18});
-      await this.setState({gelirKdvliAylik: this.state.gelirKdvsizAylik+ this.state.gelirKdvAylik});
+      await this.setState({gelirKdvAylik: roundTo(this.state.gelirKdvsizAylik*0.18,2)});
+      await this.setState({gelirKdvliAylik: roundTo(this.state.gelirKdvsizAylik+ this.state.gelirKdvAylik,2)});
 
       await this.setState({gelirKdvsizYillik: this.state.gelirKdvsizAylik * 12});
-      await this.setState({gelirKdvYillik: this.state.gelirKdvsizYillik*0.18});
-      await this.setState({gelirKdvliYillik: this.state.gelirKdvsizYillik+ this.state.gelirKdvYillik});
+      await this.setState({gelirKdvYillik: roundTo(this.state.gelirKdvsizYillik*0.18,2)});
+      await this.setState({gelirKdvliYillik: roundTo(this.state.gelirKdvsizYillik+ this.state.gelirKdvYillik,2)});
       await this.setState({yillikNetkar: this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik})
       this.gelirVergisiHesapla();
     });
