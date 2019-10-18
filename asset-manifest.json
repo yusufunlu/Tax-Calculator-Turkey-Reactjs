@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/Vergi-Hesaplama/static/js/main.84b4663c.chunk.js",
+    "main.js.map": "/Vergi-Hesaplama/static/js/main.84b4663c.chunk.js.map",
+    "runtime-main.js": "/Vergi-Hesaplama/static/js/runtime-main.b31f8a3e.js",
+    "runtime-main.js.map": "/Vergi-Hesaplama/static/js/runtime-main.b31f8a3e.js.map",
+    "static/js/2.c2262deb.chunk.js": "/Vergi-Hesaplama/static/js/2.c2262deb.chunk.js",
+    "static/js/2.c2262deb.chunk.js.map": "/Vergi-Hesaplama/static/js/2.c2262deb.chunk.js.map",
+    "index.html": "/Vergi-Hesaplama/index.html",
+    "precache-manifest.d19d8f00b6347a7455fb469671468bc8.js": "/Vergi-Hesaplama/precache-manifest.d19d8f00b6347a7455fb469671468bc8.js",
+    "service-worker.js": "/Vergi-Hesaplama/service-worker.js"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b31f8a3e.js",
+    "static/js/2.c2262deb.chunk.js",
+    "static/js/main.84b4663c.chunk.js"
+  ]
+}
