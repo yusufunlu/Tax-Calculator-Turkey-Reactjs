@@ -8,6 +8,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import roundTo from 'round-to'
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles({
   root: {
@@ -81,6 +87,8 @@ class VergiForm extends Component {
 
       gelirVergisiYillik: 0,
       yillikNetkar: 0,
+      aylikNetkar: 0,
+      firmaTipi: 'sahis'
     };
 
     this.handleChangeGelirGunluk = this.handleChangeGelirGunluk.bind(this);
@@ -88,16 +96,40 @@ class VergiForm extends Component {
     this.handleChangeGelirYillik = this.handleChangeGelirYillik.bind(this);
     this.handleChangeGiderAylik = this.handleChangeGiderAylik.bind(this);
     this.handleChangeGiderYillik = this.handleChangeGiderYillik.bind(this);
-    this.gelirVergisiHesapla = this.gelirVergisiHesapla.bind(this);
+    this.gelirVergisiSahisHesapla = this.gelirVergisiSahisHesapla.bind(this);
+    this.gelirVergisiLimitedHesapla = this.gelirVergisiLimitedHesapla.bind(this);
+    this.gelirKDVHesapla = this.gelirKDVHesapla.bind(this);
+    this.giderKDVHesapla = this.giderKDVHesapla.bind(this);
+    this.handleFirmaTipi = this.handleFirmaTipi.bind(this);
   }
 
+  handleFirmaTipi(event) {
+    this.setState({firmaTipi: event.target.value})
+  }
   gelirVergisiHesapla() {
+    if(this.state.firmaTipi == 'sahis') {
+      this.gelirVergisiSahisHesapla();
+    } else {
+      this.gelirVergisiLimitedHesapla();
+    }
+  }
+
+  gelirVergisiLimitedHesapla() {
+    this.setState({yillikNetkar : 
+      Math.round(this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik)
+    });
+    this.setState({gelirVergisiYillik:this.state.yillikNetkar * 0.22});
+  }
+
+  gelirVergisiSahisHesapla() {
     var vergi = 0;
+    this.setState({yillikNetkar : Math.round(this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik)});
+
     if(this.state.yillikNetkar > dilimler[0].limit) {
       vergi += dilimler[0].limit * dilimler[0].oran;
     } else {
       vergi += (this.state.yillikNetkar)  * dilimler[0].oran;
-      this.setState({gelirVergisiYillik:vergi});
+      this.setState({gelirVergisiYillik:Math.round(vergi)});
       return ;
     }
     if(this.state.yillikNetkar > dilimler[1].limit) {
@@ -111,73 +143,80 @@ class VergiForm extends Component {
       vergi += (dilimler[2].limit - dilimler[1].limit)  * dilimler[2].oran;
     } else {
       vergi += (this.state.yillikNetkar - dilimler[1].limit)  * dilimler[2].oran;
-      this.setState({gelirVergisiYillik:vergi});
+      this.setState({gelirVergisiYillik:Math.round(vergi)});
       return ;
     }
     if(this.state.yillikNetkar > dilimler[3].limit) {
       vergi += (dilimler[3].limit - dilimler[2].limit)  * dilimler[3].oran;
     } else {
       vergi += (this.state.yillikNetkar - dilimler[2].limit)  * dilimler[3].oran;
-      this.setState({gelirVergisiYillik:vergi});
+      this.setState({gelirVergisiYillik:Math.round(vergi)});
       return ;
     }
     this.setState({gelirVergisiYillik:vergi});
   }
 
+  gelirKDVHesapla () {
+    this.setState({gelirKdvGunluk: roundTo(this.state.gelirKdvsizGunluk *0.18,2)});
+    this.setState({gelirKdvliGunluk: roundTo(this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk,2)});
+    this.setState({gelirKdvAylik: roundTo(this.state.gelirKdvsizAylik*0.18,2)});
+    this.setState({gelirKdvliAylik: roundTo(this.state.gelirKdvsizAylik+ this.state.gelirKdvAylik,2)});
+    this.setState({gelirKdvYillik: roundTo(this.state.gelirKdvsizYillik*0.18,2)});
+    this.setState({gelirKdvliYillik: roundTo(this.state.gelirKdvsizYillik+ this.state.gelirKdvYillik,2)});  
+  }
+
+  giderKDVHesapla () {
+    this.setState({giderKdvAylik: this.state.giderKdvsizAylik*0.18});
+    this.setState({giderKdvliAylik: this.state.giderKdvsizAylik+ this.state.giderKdvAylik});
+    this.setState({giderKdvYillik: this.state.giderKdvAylik * 12});
+    this.setState({giderKdvliYillik: this.state.giderKdvliAylik * 12});
+  }
+
   handleChangeGelirGunluk(event) {
     this.setState({gelirKdvsizGunluk: parseInt(event.target.value)}, 
-    async () => { //callback
-      await this.setState({gelirKdvGunluk: roundTo(this.state.gelirKdvsizGunluk *0.18,2)});
-      await this.setState({gelirKdvliGunluk: roundTo(this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk,2)});
+    async () => {
+      await this.setState({gelirKdvsizYillik: this.state.gelirKdvsizGunluk * 249});
+      await this.setState({gelirKdvsizAylik: this.state.gelirKdvsizYillik / 12});
       
-      await this.setState({gelirKdvsizAylik: this.state.gelirKdvsizGunluk * this.state.aylikCalismaGunSayisi});
-      await this.setState({gelirKdvAylik: roundTo(this.state.gelirKdvsizAylik*0.18,2)});
-      await this.setState({gelirKdvliAylik: roundTo(this.state.gelirKdvsizAylik+ this.state.gelirKdvAylik,2)});
-
-      await this.setState({gelirKdvsizYillik: this.state.gelirKdvsizAylik * 12});
-      await this.setState({gelirKdvYillik: roundTo(this.state.gelirKdvsizYillik*0.18,2)});
-      await this.setState({gelirKdvliYillik: roundTo(this.state.gelirKdvsizYillik+ this.state.gelirKdvYillik,2)});
-      await this.setState({yillikNetkar: this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik})
+      this.gelirKDVHesapla();
       this.gelirVergisiHesapla();
     });
   }
+  
   handleChangeGelirAylik(event) {
-    this.setState({gelirKdvsizGunluk: parseInt(event.target.value)}, 
-    () => { //callback
-      this.setState({gelirKdvGunluk: this.state.gelirKdvsizGunluk*0.18});
-      this.setState({gelirKdvliGunluk: this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk});
+    this.setState({gelirKdvsizAylik: parseInt(event.target.value)}, 
+    async () => { 
+      await this.setState({gelirKdvsizYillik: this.state.gelirKdvsizAylik * 12});
+      await this.setState({gelirKdvsizGunluk: this.state.gelirKdvsizYillik / 249});
+
+      this.gelirKDVHesapla();
+      this.gelirVergisiHesapla();
     });
   }
   handleChangeGelirYillik(event) {
-    this.setState({gelirKdvsizGunluk: parseInt(event.target.value)}, 
-    () => { //callback
-      this.setState({gelirKdvGunluk: this.state.gelirKdvsizGunluk*0.18});
-      this.setState({gelirKdvliGunluk: this.state.gelirKdvsizGunluk+ this.state.gelirKdvGunluk});
+    this.setState({gelirKdvsizYillik: parseInt(event.target.value)}, 
+    async () => { 
+      await this.setState({gelirKdvsizAylik: this.state.gelirKdvsizYillik / 12});
+      await this.setState({gelirKdvsizGunluk: this.state.gelirKdvsizYillik / 249});
+
+      this.gelirKDVHesapla();
+      this.gelirVergisiHesapla();
     });
   }
+
   handleChangeGiderAylik(event) {
     this.setState({giderKdvsizAylik: parseInt(event.target.value)}, 
-    async () => { //callback
-      await this.setState({giderKdvAylik: this.state.giderKdvsizAylik*0.18});
-      await this.setState({giderKdvliAylik: this.state.giderKdvsizAylik+ this.state.giderKdvAylik});
-
+    async () => {
       await this.setState({giderKdvsizYillik: this.state.giderKdvsizAylik * 12});
-      await this.setState({giderKdvYillik: this.state.giderKdvAylik * 12});
-      await this.setState({giderKdvliYillik: this.state.giderKdvliAylik * 12});
-      await this.setState({yillikNetkar: this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik})
+      this.giderKDVHesapla();
       this.gelirVergisiHesapla();
     });
   }
   handleChangeGiderYillik(event) {
     this.setState({giderKdvsizAylik: parseInt(event.target.value) / 12}, 
-    async () => { //callback
-      await this.setState({giderKdvAylik: this.state.giderKdvsizAylik*0.18});
-      await this.setState({giderKdvliAylik: this.state.giderKdvsizAylik+ this.state.giderKdvAylik});
-
+    async () => {
       await this.setState({giderKdvsizYillik: this.state.giderKdvsizAylik * 12});
-      await this.setState({giderKdvYillik: this.state.giderKdvAylik * 12});
-      await this.setState({giderKdvliYillik: this.state.giderKdvliAylik * 12});
-      await this.setState({yillikNetkar: this.state.gelirKdvsizYillik - this.state.giderKdvsizYillik})
+      this.giderKDVHesapla();
       this.gelirVergisiHesapla();
     });
   }
@@ -185,9 +224,15 @@ class VergiForm extends Component {
   componentDidUpdate(prevProps, prevState) {
     // only update chart if the data has changed
   }
+
+  handleChange = event => {
+    this.setValue(event.target.value);
+  };
   
   render() {
     const { classes } = this.props;
+    
+
     return (
       <div>
 
@@ -195,7 +240,11 @@ class VergiForm extends Component {
       <Table className={classes.table} aria-label="simple table">
       <TableHead>
           <TableRow>
-            <StyledTableCell> --- </StyledTableCell>
+          <RadioGroup aria-label="gender" name="gender1" 
+            value={this.state.firmaTipi} onChange={this.handleFirmaTipi}>
+            <FormControlLabel value="sahis" control={<Radio />} label="sahis" />
+            <FormControlLabel value="limited" control={<Radio />} label="limited" />
+          </RadioGroup>
             <StyledTableCell>       
               Gunluk Gelir
             </StyledTableCell>
@@ -217,7 +266,7 @@ class VergiForm extends Component {
           <TableRow>
             <StyledTableCell>Giriş</StyledTableCell>
             <TableCell>       
-            <TextField
+            {/* <TextField
               id="standard-name"
               label="Gunluk Gelir"
               className={classes.textField}
@@ -225,7 +274,10 @@ class VergiForm extends Component {
               defaultValue ="0"
               onChange={this.handleChangeGelirGunluk}
               margin="normal"
-            />
+            /> */}
+            <TableCell >          
+              <input type="number" value={this.state.gelirKdvsizGunluk} onChange={this.handleChangeGelirGunluk}/>
+            </TableCell>
             </TableCell>
             <TableCell >          
               <input type="number" value={this.state.gelirKdvsizAylik} onChange={this.handleChangeGelirAylik}/>
@@ -281,7 +333,25 @@ class VergiForm extends Component {
         </TableBody>
       </Table>
     </Paper>
-      Yıllık Gelir Vergisi : {this.state.gelirVergisiYillik}
+    <ul>
+      <li>
+        Yıllık Gelir Vergisi : {this.state.gelirVergisiYillik}
+      </li>
+      <li>
+        Yillik Vergisi Verilmis : {this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik}
+      </li>
+      <li>
+        Aylik Vergisi Verilmis : {(this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik) / 12}
+      </li>
+      <li>
+        Yillik Vergisi Verilmis KDV Geri Odemesi Alinmis: 
+        {this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik + this.state.giderKdvYillik}
+      </li>
+      <li>
+        Aylik Vergisi Verilmis KDV Geri Odemesi Alinmis:
+        {(this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik) / 12 + this.state.giderKdvAylik}
+      </li>
+    </ul>
     </div>
     );
   }
