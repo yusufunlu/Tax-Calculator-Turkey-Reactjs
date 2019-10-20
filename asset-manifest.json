@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/vergihesaplama/static/js/main.401e5855.chunk.js",
-    "main.js.map": "/vergihesaplama/static/js/main.401e5855.chunk.js.map",
-    "runtime-main.js": "/vergihesaplama/static/js/runtime-main.1d5fcd23.js",
-    "runtime-main.js.map": "/vergihesaplama/static/js/runtime-main.1d5fcd23.js.map",
-    "static/js/2.88a2990c.chunk.js": "/vergihesaplama/static/js/2.88a2990c.chunk.js",
-    "static/js/2.88a2990c.chunk.js.map": "/vergihesaplama/static/js/2.88a2990c.chunk.js.map",
+    "main.js": "/vergihesaplama/static/js/main.2af5ddc6.chunk.js",
+    "main.js.map": "/vergihesaplama/static/js/main.2af5ddc6.chunk.js.map",
+    "runtime-main.js": "/vergihesaplama/static/js/runtime-main.dbb694c0.js",
+    "runtime-main.js.map": "/vergihesaplama/static/js/runtime-main.dbb694c0.js.map",
+    "static/js/2.c2262deb.chunk.js": "/vergihesaplama/static/js/2.c2262deb.chunk.js",
+    "static/js/2.c2262deb.chunk.js.map": "/vergihesaplama/static/js/2.c2262deb.chunk.js.map",
     "index.html": "/vergihesaplama/index.html",
-    "precache-manifest.b3988e8d3b4093e02443586b6aad4471.js": "/vergihesaplama/precache-manifest.b3988e8d3b4093e02443586b6aad4471.js",
+    "precache-manifest.74a9bc6f1fbcac4d3677e6b0267187cd.js": "/vergihesaplama/precache-manifest.74a9bc6f1fbcac4d3677e6b0267187cd.js",
     "service-worker.js": "/vergihesaplama/service-worker.js"
   },
   "entrypoints": [
-    "static/js/runtime-main.1d5fcd23.js",
-    "static/js/2.88a2990c.chunk.js",
-    "static/js/main.401e5855.chunk.js"
+    "static/js/runtime-main.dbb694c0.js",
+    "static/js/2.c2262deb.chunk.js",
+    "static/js/main.2af5ddc6.chunk.js"
   ]
 }
