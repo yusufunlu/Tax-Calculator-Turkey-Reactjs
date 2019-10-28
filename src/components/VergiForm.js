@@ -104,7 +104,11 @@ class VergiForm extends Component {
   }
 
   handleFirmaTipi(event) {
-    this.setState({firmaTipi: event.target.value})
+    this.setState({firmaTipi: event.target.value},
+      async () => {
+        this.gelirKDVHesapla();
+        this.gelirVergisiHesapla();
+      });
   }
   gelirVergisiHesapla() {
     if(this.state.firmaTipi == 'sahis') {
