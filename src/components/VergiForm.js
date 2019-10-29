@@ -14,6 +14,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles({
   root: {
@@ -29,13 +31,9 @@ const useStyles = makeStyles({
 const StyledTableCell = withStyles(theme => ({
   head: {
     fontSize: 16,
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
   },
   body: {
     fontSize: 14,
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
   },
 }))(TableCell);
 
@@ -103,12 +101,15 @@ class VergiForm extends Component {
     this.handleFirmaTipi = this.handleFirmaTipi.bind(this);
   }
 
-  handleFirmaTipi(event) {
-    this.setState({firmaTipi: event.target.value},
-      async () => {
-        this.gelirKDVHesapla();
-        this.gelirVergisiHesapla();
-      });
+  handleFirmaTipi(tip) {
+    if(tip != this.state.firmaTipi) {
+      this.setState({firmaTipi: tip},
+        async () => {
+          this.gelirKDVHesapla();
+          this.gelirVergisiHesapla();
+        });
+    }
+
   }
   gelirVergisiHesapla() {
     if(this.state.firmaTipi == 'sahis') {
@@ -225,30 +226,22 @@ class VergiForm extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // only update chart if the data has changed
-  }
-
-  handleChange = event => {
-    this.setValue(event.target.value);
-  };
-  
   render() {
     const { classes } = this.props;
-    
-
     return (
       <div>
-
       <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
       <TableHead>
           <TableRow>
-          <RadioGroup aria-label="gender" name="gender1" 
-            value={this.state.firmaTipi} onChange={this.handleFirmaTipi}>
-            <FormControlLabel value="sahis" control={<Radio />} label="sahis" />
-            <FormControlLabel value="limited" control={<Radio />} label="limited" />
-          </RadioGroup>
+          Sahis
+          <Switch
+          checked={this.state.firmaTipi =="limited"}
+          onChange={this.handleFirmaTipi("sahis")}
+          value={this.state.firmaTipi}
+          inputProps={{ 'aria-label': 'primary checkbox' }}
+          /> 
+          Limited
             <StyledTableCell>       
               Gunluk Gelir
             </StyledTableCell>
@@ -270,30 +263,59 @@ class VergiForm extends Component {
           <TableRow>
             <StyledTableCell>Giriş</StyledTableCell>
             <TableCell>       
-            {/* <TextField
+            <TextField
               id="standard-name"
-              label="Gunluk Gelir"
+              label="Gunluk KDV'siz Gelir"
               className={classes.textField}
               type="number"
-              defaultValue ="0"
+              value ={this.state.gelirKdvsizGunluk}
               onChange={this.handleChangeGelirGunluk}
               margin="normal"
-            /> */}
-            <TableCell >          
-              <input type="number" value={this.state.gelirKdvsizGunluk} onChange={this.handleChangeGelirGunluk}/>
+            />
             </TableCell>
+            <TableCell> 
+            <TextField
+              id="standard-name"
+              label="Aylık KDV'siz Gelir"
+              className={classes.textField}
+              type="number"
+              value ={this.state.gelirKdvsizAylik}
+              onChange={this.handleChangeGelirAylik}
+              margin="normal"
+            />
             </TableCell>
-            <TableCell >          
-              <input type="number" value={this.state.gelirKdvsizAylik} onChange={this.handleChangeGelirAylik}/>
+            <TableCell> 
+            <TextField
+              id="standard-name"
+              label="Yıllık KDV'siz Gelir"
+              className={classes.textField}
+              type="number"
+              value ={this.state.gelirKdvsizYillik}
+              onChange={this.handleChangeGelirYillik}
+              margin="normal"
+            />
             </TableCell>
-            <TableCell >          
-              <input type="number" value={this.state.gelirKdvsizYillik} onChange={this.handleChangeGelirYillik} />
+            <TableCell> 
+            <TextField
+              id="standard-name"
+              label="Yıllık KDV'siz Gelir"
+              className={classes.textField}
+              type="number"
+              value ={this.state.giderKdvsizAylik}
+              onChange={this.handleChangeGiderAylik}
+              margin="normal"
+            />
             </TableCell>
-            <TableCell >          
-              <input type="number" value={this.state.giderKdvsizAylik} onChange={this.handleChangeGiderAylik} />
-            </TableCell>
-            <TableCell >          
-              <input type="number" value={this.state.giderKdvsizYillik} onChange={this.handleChangeGiderYillik} />
+            <TableCell> 
+            <TextField
+              id="standard-name"
+              label="Yıllık KDV'siz Gelir"
+              className={classes.textField}
+              type="number"
+              value ={this.state.giderKdvsizYillik}
+              onChange={this.handleChangeGiderYillik}
+              margin="normal"
+            />
             </TableCell>
           </TableRow>
         </TableBody>
@@ -301,42 +323,42 @@ class VergiForm extends Component {
           <TableRow>
           <StyledTableCell>KDV</StyledTableCell>
             <TableCell>       
-              Günlük gelir KDV : {this.state.gelirKdvGunluk} 
+              {this.state.gelirKdvGunluk} 
             </TableCell>
             <TableCell >          
-              Aylık gelir KDV: {this.state.gelirKdvAylik}
+              {this.state.gelirKdvAylik}
             </TableCell>
             <TableCell >          
-              Yıllık gelir KDV: {this.state.gelirKdvYillik}
+              {this.state.gelirKdvYillik}
             </TableCell>
             <TableCell >          
-              Aylık Gider KDV: {this.state.giderKdvAylik}
+              {this.state.giderKdvAylik}
             </TableCell>
             <TableCell >          
-              Yıllık Gider KDV: {this.state.giderKdvYillik}
+              {this.state.giderKdvYillik}
             </TableCell>
           </TableRow>
           <TableRow>
           <StyledTableCell>KDV'li Toplam</StyledTableCell>
             <TableCell>       
-              Günlük gelir KDVli : {this.state.gelirKdvliGunluk} 
+              {this.state.gelirKdvliGunluk} 
             </TableCell>
             <TableCell >          
-              Aylık gelir KDVli: {this.state.gelirKdvliAylik}
+              {this.state.gelirKdvliAylik}
             </TableCell>
             <TableCell >          
-              Yıllık gelir KDVli: {this.state.gelirKdvliYillik}
+              {this.state.gelirKdvliYillik}
             </TableCell>
             <TableCell >          
-              Aylık Gider KDVli: {this.state.giderKdvliAylik}
+              {this.state.giderKdvliAylik}
             </TableCell>
             <TableCell >          
-              Yıllık Gider KDVli: {this.state.giderKdvliYillik}
+              {this.state.giderKdvliYillik}
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    </Paper>
+      </Paper>
     <ul>
       <li>
         Yıllık Gelir Vergisi : {this.state.gelirVergisiYillik}
