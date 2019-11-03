@@ -101,16 +101,17 @@ class VergiForm extends Component {
     this.handleFirmaTipi = this.handleFirmaTipi.bind(this);
   }
 
-  handleFirmaTipi(tip) {
-    if(tip != this.state.firmaTipi) {
-      this.setState({firmaTipi: tip},
+  handleFirmaTipi(event) {
+    
+    if(event.target.checked != this.state.firmaTipi) {
+      this.setState({firmaTipi: event.target.checked ? "limited":"sahis"},
         async () => {
           this.gelirKDVHesapla();
           this.gelirVergisiHesapla();
         });
     }
-
   }
+
   gelirVergisiHesapla() {
     if(this.state.firmaTipi == 'sahis') {
       this.gelirVergisiSahisHesapla();
@@ -234,14 +235,14 @@ class VergiForm extends Component {
       <Table className={classes.table} aria-label="simple table">
       <TableHead>
           <TableRow>
-          Sahis
-          <Switch
-          checked={this.state.firmaTipi =="limited"}
-          onChange={this.handleFirmaTipi("sahis")}
-          value={this.state.firmaTipi}
-          inputProps={{ 'aria-label': 'primary checkbox' }}
-          /> 
-          Limited
+            Sahis
+            <Switch
+            checked={this.state.firmaTipi =="limited"}
+            onChange={this.handleFirmaTipi}
+            value={this.state.firmaTipi}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            /> 
+            Limited
             <StyledTableCell>       
               Gunluk Gelir
             </StyledTableCell>
