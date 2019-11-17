@@ -1,12 +1,10 @@
 import React from 'react';
-import VergiForm from './VergiForm'
-import LineChart from './LineChart'
+import VergiForm from './VergiForm/VergiForm'
 
 function App() {
   return (
     <div className="App">
       <VergiForm/>
-      <LineChart/>
     </div>
   );
 }

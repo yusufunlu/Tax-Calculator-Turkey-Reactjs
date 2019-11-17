@@ -8,14 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import roundTo from 'round-to'
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Switch from '@material-ui/core/Switch';
+import styles from './mystyle.module.css'; 
+import Invoice from '../Invoice/Invoice';
+import LineChart from '../LineChart/LineChart'
 
 const useStyles = makeStyles({
   root: {
@@ -340,7 +337,7 @@ class VergiForm extends Component {
             </TableCell>
           </TableRow>
           <TableRow>
-          <StyledTableCell>KDV'li Toplam</StyledTableCell>
+          <StyledTableCell className={styles.bigBlue}>KDV'li Toplam</StyledTableCell>
             <TableCell>       
               {this.state.gelirKdvliGunluk} 
             </TableCell>
@@ -353,32 +350,15 @@ class VergiForm extends Component {
             <TableCell >          
               {this.state.giderKdvliAylik}
             </TableCell>
-            <TableCell >          
+            <TableCell className={styles.bigBlue}>          
               {this.state.giderKdvliYillik}
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
       </Paper>
-    <ul>
-      <li>
-        Yıllık Gelir Vergisi : {this.state.gelirVergisiYillik}
-      </li>
-      <li>
-        Yillik Vergisi Verilmis : {this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik}
-      </li>
-      <li>
-        Aylik Vergisi Verilmis : {(this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik) / 12}
-      </li>
-      <li>
-        Yillik Vergisi Verilmis KDV Geri Odemesi Alinmis: 
-        {this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik + this.state.giderKdvYillik}
-      </li>
-      <li>
-        Aylik Vergisi Verilmis KDV Geri Odemesi Alinmis:
-        {(this.state.gelirKdvsizYillik - this.state.gelirVergisiYillik) / 12 + this.state.giderKdvAylik}
-      </li>
-    </ul>
+      <Invoice results={this.state}/>
+      <LineChart/>
     </div>
     );
   }

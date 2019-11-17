@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import styles from './mystyle.module.css'; 
 
 class LineChart extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class LineChart extends Component {
           highcharts={Highcharts}
           options={chartOptions}
         />
-      <h3>Hovering over {hoverData}</h3>
+      <h3 className={styles.bigblue}>Hovering over {hoverData}</h3>
       <button onClick={this.updateSeries.bind(this)}>Update Series</button>
       </div>
     )
