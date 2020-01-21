@@ -10,20 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import roundTo from 'round-to'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Switch from '@material-ui/core/Switch';
-import styles from './mystyle.module.css'; 
 import Invoice from '../Invoice/Invoice';
-import LineChart from '../LineChart/LineChart'
-
-const useStyles = makeStyles({
-  root: {
-    width: '40%',
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 450,
-  },
-});
-
+import LineChart from '../LineChart/LineChart';
+import commonStyles from '../../styles/App.css'; 
+import './VergiForm.css'; 
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -99,8 +89,7 @@ class VergiForm extends Component {
   }
 
   handleFirmaTipi(event) {
-    
-    if(event.target.checked != this.state.firmaTipi) {
+    if(event.target.checked !== this.state.firmaTipi) {
       this.setState({firmaTipi: event.target.checked ? "limited":"sahis"},
         async () => {
           this.gelirKDVHesapla();
@@ -110,7 +99,7 @@ class VergiForm extends Component {
   }
 
   gelirVergisiHesapla() {
-    if(this.state.firmaTipi == 'sahis') {
+    if(this.state.firmaTipi === 'sahis') {
       this.gelirVergisiSahisHesapla();
     } else {
       this.gelirVergisiLimitedHesapla();
@@ -225,142 +214,136 @@ class VergiForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div>
-      <Paper className={classes.root}>
-      <Table className={classes.table} aria-label="simple table">
-      <TableHead>
-          <TableRow>
-            Sahis
-            <Switch
-            checked={this.state.firmaTipi =="limited"}
-            onChange={this.handleFirmaTipi}
-            value={this.state.firmaTipi}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-            /> 
-            Limited
-            <StyledTableCell>       
-              Gunluk Gelir
-            </StyledTableCell>
-            <StyledTableCell>          
-              Aylik Gelir
-            </StyledTableCell>
-            <StyledTableCell>          
-              Yillik gelir
-            </StyledTableCell>
-            <StyledTableCell>          
-              Aylık gider
-            </StyledTableCell>
-            <StyledTableCell>          
-              Yıllık gider
-            </StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <StyledTableCell>Giriş</StyledTableCell>
-            <TableCell>       
-            <TextField
-              id="standard-name"
-              label="Gunluk KDV'siz Gelir"
-              className={classes.textField}
-              type="number"
-              value ={this.state.gelirKdvsizGunluk}
-              onChange={this.handleChangeGelirGunluk}
-              margin="normal"
-            />
-            </TableCell>
-            <TableCell> 
-            <TextField
-              id="standard-name"
-              label="Aylık KDV'siz Gelir"
-              className={classes.textField}
-              type="number"
-              value ={this.state.gelirKdvsizAylik}
-              onChange={this.handleChangeGelirAylik}
-              margin="normal"
-            />
-            </TableCell>
-            <TableCell> 
-            <TextField
-              id="standard-name"
-              label="Yıllık KDV'siz Gelir"
-              className={classes.textField}
-              type="number"
-              value ={this.state.gelirKdvsizYillik}
-              onChange={this.handleChangeGelirYillik}
-              margin="normal"
-            />
-            </TableCell>
-            <TableCell> 
-            <TextField
-              id="standard-name"
-              label="Yıllık KDV'siz Gelir"
-              className={classes.textField}
-              type="number"
-              value ={this.state.giderKdvsizAylik}
-              onChange={this.handleChangeGiderAylik}
-              margin="normal"
-            />
-            </TableCell>
-            <TableCell> 
-            <TextField
-              id="standard-name"
-              label="Yıllık KDV'siz Gelir"
-              className={classes.textField}
-              type="number"
-              value ={this.state.giderKdvsizYillik}
-              onChange={this.handleChangeGiderYillik}
-              margin="normal"
-            />
-            </TableCell>
-          </TableRow>
-        </TableBody>
-        <TableBody>
-          <TableRow>
-          <StyledTableCell>KDV</StyledTableCell>
-            <TableCell>       
-              {this.state.gelirKdvGunluk} 
-            </TableCell>
-            <TableCell >          
-              {this.state.gelirKdvAylik}
-            </TableCell>
-            <TableCell >          
-              {this.state.gelirKdvYillik}
-            </TableCell>
-            <TableCell >          
-              {this.state.giderKdvAylik}
-            </TableCell>
-            <TableCell >          
-              {this.state.giderKdvYillik}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-          <StyledTableCell className={styles.bigBlue}>KDV'li Toplam</StyledTableCell>
-            <TableCell>       
-              {this.state.gelirKdvliGunluk} 
-            </TableCell>
-            <TableCell >          
-              {this.state.gelirKdvliAylik}
-            </TableCell>
-            <TableCell >          
-              {this.state.gelirKdvliYillik}
-            </TableCell>
-            <TableCell >          
-              {this.state.giderKdvliAylik}
-            </TableCell>
-            <TableCell className={styles.bigBlue}>          
-              {this.state.giderKdvliYillik}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      </Paper>
-      <Invoice results={this.state}/>
-      <LineChart/>
+      <div >
+        <Paper >
+        <Table aria-label="simple table" className="input-form">
+          <TableHead>
+              <TableRow>
+                Sahis
+                <Switch
+                checked={this.state.firmaTipi =="limited"}
+                onChange={this.handleFirmaTipi}
+                value={this.state.firmaTipi}
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+                /> 
+                Limited
+                <StyledTableCell>       
+                  Gunluk Gelir
+                </StyledTableCell>
+                <StyledTableCell>          
+                  Aylik Gelir
+                </StyledTableCell>
+                <StyledTableCell>          
+                  Yillik gelir
+                </StyledTableCell>
+                <StyledTableCell>          
+                  Aylık gider
+                </StyledTableCell>
+                <StyledTableCell>          
+                  Yıllık gider
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <StyledTableCell>Giriş</StyledTableCell>
+                <TableCell>       
+                <TextField
+                  id="standard-name"
+                  label="Gunluk KDV'siz Gelir"
+                  type="number"
+                  value ={this.state.gelirKdvsizGunluk}
+                  onChange={this.handleChangeGelirGunluk}
+                  margin="normal"
+                />
+                </TableCell>
+                <TableCell> 
+                <TextField
+                  id="standard-name"
+                  label="Aylık KDV'siz Gelir"
+                  type="number"
+                  value ={this.state.gelirKdvsizAylik}
+                  onChange={this.handleChangeGelirAylik}
+                  margin="normal"
+                />
+                </TableCell>
+                <TableCell> 
+                <TextField
+                  id="standard-name"
+                  label="Yıllık KDV'siz Gelir"
+                  type="number"
+                  value ={this.state.gelirKdvsizYillik}
+                  onChange={this.handleChangeGelirYillik}
+                  margin="normal"
+                />
+                </TableCell>
+                <TableCell> 
+                <TextField
+                  id="standard-name"
+                  label="Yıllık KDV'siz Gelir"
+                  type="number"
+                  value ={this.state.giderKdvsizAylik}
+                  onChange={this.handleChangeGiderAylik}
+                  margin="normal"
+                />
+                </TableCell>
+                <TableCell> 
+                <TextField
+                  id="standard-name"
+                  label="Yıllık KDV'siz Gelir"
+                  type="number"
+                  value ={this.state.giderKdvsizYillik}
+                  onChange={this.handleChangeGiderYillik}
+                  margin="normal"
+                />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+            <TableBody>
+              <TableRow>
+              <StyledTableCell>KDV</StyledTableCell>
+                <TableCell>       
+                  {this.state.gelirKdvGunluk} 
+                </TableCell>
+                <TableCell >          
+                  {this.state.gelirKdvAylik}
+                </TableCell>
+                <TableCell >          
+                  {this.state.gelirKdvYillik}
+                </TableCell>
+                <TableCell >          
+                  {this.state.giderKdvAylik}
+                </TableCell>
+                <TableCell >          
+                  {this.state.giderKdvYillik}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+              <StyledTableCell className={commonStyles.bigBlue}>KDV'li Toplam</StyledTableCell>
+                <TableCell>       
+                  {this.state.gelirKdvliGunluk} 
+                </TableCell>
+                <TableCell >          
+                  {this.state.gelirKdvliAylik}
+                </TableCell>
+                <TableCell >          
+                  {this.state.gelirKdvliYillik}
+                </TableCell>
+                <TableCell >          
+                  {this.state.giderKdvliAylik}
+                </TableCell>
+                <TableCell className={commonStyles.bigBlue}>          
+                  {this.state.giderKdvliYillik}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+        <Invoice results={this.state}/>
+        <LineChart/>
     </div>
     );
   }
 }
-export default withStyles(useStyles)(VergiForm);
+export default VergiForm;
