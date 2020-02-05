@@ -215,8 +215,12 @@ class VergiForm extends Component {
 
   render() {
     return (
+
       <div >
-        <Paper >
+            <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+    <Paper>
         <Table aria-label="simple table" className="input-form">
           <TableHead>
               <TableRow>
@@ -228,26 +232,21 @@ class VergiForm extends Component {
                 inputProps={{ 'aria-label': 'primary checkbox' }}
                 /> 
                 Limited
+              </TableRow>
+
+              <TableRow> 
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell>Giriş</StyledTableCell>
+                <StyledTableCell>KDV</StyledTableCell>
+                <StyledTableCell>KDV'li Toplam</StyledTableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              <TableRow>
                 <StyledTableCell>       
                   Gunluk Gelir
                 </StyledTableCell>
-                <StyledTableCell>          
-                  Aylik Gelir
-                </StyledTableCell>
-                <StyledTableCell>          
-                  Yillik gelir
-                </StyledTableCell>
-                <StyledTableCell>          
-                  Aylık gider
-                </StyledTableCell>
-                <StyledTableCell>          
-                  Yıllık gider
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <StyledTableCell>Giriş</StyledTableCell>
                 <TableCell>       
                 <TextField
                   id="standard-name"
@@ -258,7 +257,18 @@ class VergiForm extends Component {
                   margin="normal"
                 />
                 </TableCell>
-                <TableCell> 
+                <TableCell>       
+                  {this.state.gelirKdvGunluk} 
+                </TableCell>
+                <TableCell>       
+                  {this.state.gelirKdvliGunluk} 
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableCell>       
+                  Aylık Gelir
+                </StyledTableCell>
+                <TableCell>       
                 <TextField
                   id="standard-name"
                   label="Aylık KDV'siz Gelir"
@@ -268,7 +278,18 @@ class VergiForm extends Component {
                   margin="normal"
                 />
                 </TableCell>
-                <TableCell> 
+                <TableCell>       
+                  {this.state.gelirKdvAylik} 
+                </TableCell>
+                <TableCell>       
+                  {this.state.gelirKdvliAylik} 
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableCell>       
+                  Yıllık Gelir
+                </StyledTableCell>
+                <TableCell>       
                 <TextField
                   id="standard-name"
                   label="Yıllık KDV'siz Gelir"
@@ -278,16 +299,39 @@ class VergiForm extends Component {
                   margin="normal"
                 />
                 </TableCell>
-                <TableCell> 
-                <TextField
-                  id="standard-name"
-                  label="Yıllık KDV'siz Gelir"
-                  type="number"
-                  value ={this.state.giderKdvsizAylik}
-                  onChange={this.handleChangeGiderAylik}
-                  margin="normal"
-                />
+                <TableCell>       
+                  {this.state.gelirKdvYillik} 
                 </TableCell>
+                <TableCell>       
+                  {this.state.gelirKdvliYillik} 
+                </TableCell>
+              </TableRow>
+
+
+              <TableRow>
+                <StyledTableCell>          
+                  Aylık gider
+                </StyledTableCell>
+                <TableCell> 
+                  <TextField
+                    id="standard-name"
+                    label="Aylık KDV'siz Gider"
+                    type="number"
+                    value ={this.state.giderKdvsizAylik}
+                    onChange={this.handleChangeGiderAylik}
+                    margin="normal"
+                  />
+                </TableCell>
+                <TableCell >          
+                  {this.state.giderKdvliAylik}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+            <TableBody>
+              <TableRow>
+              <StyledTableCell>          
+                  Yıllık gider
+                </StyledTableCell>
                 <TableCell> 
                 <TextField
                   id="standard-name"
@@ -298,41 +342,6 @@ class VergiForm extends Component {
                   margin="normal"
                 />
                 </TableCell>
-              </TableRow>
-            </TableBody>
-            <TableBody>
-              <TableRow>
-              <StyledTableCell>KDV</StyledTableCell>
-                <TableCell>       
-                  {this.state.gelirKdvGunluk} 
-                </TableCell>
-                <TableCell >          
-                  {this.state.gelirKdvAylik}
-                </TableCell>
-                <TableCell >          
-                  {this.state.gelirKdvYillik}
-                </TableCell>
-                <TableCell >          
-                  {this.state.giderKdvAylik}
-                </TableCell>
-                <TableCell >          
-                  {this.state.giderKdvYillik}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-              <StyledTableCell className={commonStyles.bigBlue}>KDV'li Toplam</StyledTableCell>
-                <TableCell>       
-                  {this.state.gelirKdvliGunluk} 
-                </TableCell>
-                <TableCell >          
-                  {this.state.gelirKdvliAylik}
-                </TableCell>
-                <TableCell >          
-                  {this.state.gelirKdvliYillik}
-                </TableCell>
-                <TableCell >          
-                  {this.state.giderKdvliAylik}
-                </TableCell>
                 <TableCell className={commonStyles.bigBlue}>          
                   {this.state.giderKdvliYillik}
                 </TableCell>
@@ -340,8 +349,18 @@ class VergiForm extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <Invoice results={this.state}/>
-        <LineChart/>
+        
+    </div>
+    <div class="col-sm">
+    <Invoice results={this.state}/>
+    </div>
+    <div class="col-sm">
+    <LineChart/>
+    </div>
+  </div>
+</div>
+
+        
     </div>
     );
   }
