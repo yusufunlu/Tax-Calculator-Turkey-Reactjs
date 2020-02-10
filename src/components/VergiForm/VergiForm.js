@@ -165,7 +165,7 @@ class VergiForm extends Component {
   }
 
   handleChangeGelirGunluk(event) {
-    this.setState({gelirKdvsizGunluk: parseInt(event.target.value)}, 
+    this.setState({gelirKdvsizGunluk: roundTo(parseInt(event.target.value),2)}, 
     async () => {
       await this.setState({gelirKdvsizYillik: this.state.gelirKdvsizGunluk * 249});
       await this.setState({gelirKdvsizAylik: this.state.gelirKdvsizYillik / 12});
@@ -216,8 +216,8 @@ class VergiForm extends Component {
   render() {
     return (
 
-      <div >
-            <div class="container-fluid">
+  <div >
+  <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
     <Paper>
