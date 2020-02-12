@@ -23,33 +23,26 @@ class Invoice extends Component {
     const { gelirVergisiYillik,gelirKdvsizYillik,giderKdvYillik,giderKdvAylik } = this.props.results;
     return (
       <div>
-        <StyledTableCell>Yıllık Gelir Vergisi</StyledTableCell>
-        <StyledTableCell>{gelirVergisiYillik}</StyledTableCell>
-        <StyledTableCell>Yıllık Gelir Vergisi</StyledTableCell>
-        <StyledTableCell>{gelirKdvsizYillik - gelirVergisiYillik}</StyledTableCell>
-        <StyledTableCell>Yıllık Gelir Vergisi</StyledTableCell>
-        <StyledTableCell>{(gelirKdvsizYillik - gelirVergisiYillik) / 12}</StyledTableCell>
-        <StyledTableCell>Yıllık Gelir Vergisi</StyledTableCell>
-        <StyledTableCell>{gelirKdvsizYillik - gelirVergisiYillik + giderKdvYillik}</StyledTableCell>
-        <ul>
-          <li>
-            Yıllık Gelir Vergisi : {gelirVergisiYillik}
-          </li>
-          <li>
-            Yillik Vergisi Verilmis : {gelirKdvsizYillik - gelirVergisiYillik}
-          </li>
-          <li>
-            Aylik Vergisi Verilmis : {(gelirKdvsizYillik - gelirVergisiYillik) / 12}
-          </li>
-          <li>
-            Yillik Vergisi Verilmis KDV Geri Odemesi Alinmis: 
-            {gelirKdvsizYillik - gelirVergisiYillik + giderKdvYillik}
-          </li>
-          <li>
-            Aylik Vergisi Verilmis KDV Geri Odemesi Alinmis:
-            {(gelirKdvsizYillik - gelirVergisiYillik) / 12 + giderKdvAylik}
-          </li>
-        </ul>
+        <div> 
+          <StyledTableCell>Yıllık Gelir Vergisi</StyledTableCell>
+          <StyledTableCell>{gelirVergisiYillik}</StyledTableCell>
+        </div>
+        <div> 
+          <StyledTableCell>Yillik Vergisi Verilmis </StyledTableCell>
+          <StyledTableCell>{gelirKdvsizYillik - gelirVergisiYillik}</StyledTableCell>
+        </div>
+        <div> 
+          <StyledTableCell>Aylik Vergisi Verilmis</StyledTableCell>
+          <StyledTableCell>{(gelirKdvsizYillik - gelirVergisiYillik) / 12}</StyledTableCell>
+        </div>
+        <div> 
+          <StyledTableCell>Yillik Vergisi Verilmis KDV Geri Odemesi Alinmis</StyledTableCell>
+          <StyledTableCell>{gelirKdvsizYillik - gelirVergisiYillik + giderKdvYillik}</StyledTableCell>
+        </div>
+        <div> 
+          <StyledTableCell>Aylik Vergisi Verilmis KDV Geri Odemesi Alinmis</StyledTableCell>
+          <StyledTableCell>{(gelirKdvsizYillik - gelirVergisiYillik) / 12 + giderKdvAylik}</StyledTableCell>
+        </div>
       </div>
     );
   }

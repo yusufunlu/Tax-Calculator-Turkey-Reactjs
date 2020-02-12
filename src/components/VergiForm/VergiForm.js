@@ -219,7 +219,7 @@ class VergiForm extends Component {
   <div >
   <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-12">
     <Paper>
         <Table aria-label="simple table" className="input-form">
           <TableHead>
@@ -351,10 +351,10 @@ class VergiForm extends Component {
         </Paper>
         
     </div>
-    <div class="col-sm">
+    <div class="col-md-4 col-sm-12">
     <Invoice results={this.state}/>
     </div>
-    <div class="col-sm">
+    <div class="col-md-4 col-sm-12">
     <LineChart/>
     </div>
   </div>
