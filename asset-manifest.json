@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/vergihesaplama/static/css/main.25518c38.chunk.css",
-    "main.js": "/vergihesaplama/static/js/main.37d53112.chunk.js",
-    "main.js.map": "/vergihesaplama/static/js/main.37d53112.chunk.js.map",
-    "runtime-main.js": "/vergihesaplama/static/js/runtime-main.dbb694c0.js",
-    "runtime-main.js.map": "/vergihesaplama/static/js/runtime-main.dbb694c0.js.map",
-    "static/css/2.0624914a.chunk.css": "/vergihesaplama/static/css/2.0624914a.chunk.css",
-    "static/js/2.0917f4af.chunk.js": "/vergihesaplama/static/js/2.0917f4af.chunk.js",
-    "static/js/2.0917f4af.chunk.js.map": "/vergihesaplama/static/js/2.0917f4af.chunk.js.map",
-    "index.html": "/vergihesaplama/index.html",
-    "precache-manifest.c2e50da32cd3d3ce7bd1f65394a10a81.js": "/vergihesaplama/precache-manifest.c2e50da32cd3d3ce7bd1f65394a10a81.js",
-    "service-worker.js": "/vergihesaplama/service-worker.js",
-    "static/css/2.0624914a.chunk.css.map": "/vergihesaplama/static/css/2.0624914a.chunk.css.map",
-    "static/css/main.25518c38.chunk.css.map": "/vergihesaplama/static/css/main.25518c38.chunk.css.map"
+    "main.css": "/Tax-Calculator-Turkey/static/css/main.25518c38.chunk.css",
+    "main.js": "/Tax-Calculator-Turkey/static/js/main.f25957f9.chunk.js",
+    "main.js.map": "/Tax-Calculator-Turkey/static/js/main.f25957f9.chunk.js.map",
+    "runtime-main.js": "/Tax-Calculator-Turkey/static/js/runtime-main.e14a4e7f.js",
+    "runtime-main.js.map": "/Tax-Calculator-Turkey/static/js/runtime-main.e14a4e7f.js.map",
+    "static/css/2.0624914a.chunk.css": "/Tax-Calculator-Turkey/static/css/2.0624914a.chunk.css",
+    "static/js/2.5e2aa6f9.chunk.js": "/Tax-Calculator-Turkey/static/js/2.5e2aa6f9.chunk.js",
+    "static/js/2.5e2aa6f9.chunk.js.map": "/Tax-Calculator-Turkey/static/js/2.5e2aa6f9.chunk.js.map",
+    "index.html": "/Tax-Calculator-Turkey/index.html",
+    "precache-manifest.9e7e13f6456c7a3a210d247b97df6424.js": "/Tax-Calculator-Turkey/precache-manifest.9e7e13f6456c7a3a210d247b97df6424.js",
+    "service-worker.js": "/Tax-Calculator-Turkey/service-worker.js",
+    "static/css/2.0624914a.chunk.css.map": "/Tax-Calculator-Turkey/static/css/2.0624914a.chunk.css.map",
+    "static/css/main.25518c38.chunk.css.map": "/Tax-Calculator-Turkey/static/css/main.25518c38.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.dbb694c0.js",
+    "static/js/runtime-main.e14a4e7f.js",
     "static/css/2.0624914a.chunk.css",
-    "static/js/2.0917f4af.chunk.js",
+    "static/js/2.5e2aa6f9.chunk.js",
     "static/css/main.25518c38.chunk.css",
-    "static/js/main.37d53112.chunk.js"
+    "static/js/main.f25957f9.chunk.js"
   ]
 }
